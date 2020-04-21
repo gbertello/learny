@@ -3,4 +3,3 @@ RUN pip install pytest
 COPY app /app
 COPY test /test
 CMD pytest -q test/test.py
-
