@@ -1,5 +1,0 @@
-FROM python:3.8.2-alpine
-RUN pip install pytest
-COPY app /app
-COPY test /test
-CMD pytest -q test/test.py

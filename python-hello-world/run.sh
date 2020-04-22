@@ -1,2 +1,2 @@
 docker build -t ${PWD##*/} . > /dev/null
-docker run ${PWD##*/}
+docker run ${PWD##*/} python /app/main.py
