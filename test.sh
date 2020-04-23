@@ -33,3 +33,9 @@ cd mongo
 ./test.sh
 cd ..
 echo ""
+
+echo "Testing flask"
+cd flask
+./test.sh
+cd ..
+echo ""
