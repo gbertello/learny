@@ -1,2 +1,3 @@
-docker build -t ${PWD##*/} . > /dev/null
-docker run ${PWD##*/} python /app/main.py $1
+CWD=$(cd `dirname $0` && pwd)
+docker build -t ${CWD##*/} $CWD > /dev/null
+docker run ${CWD##*/} python main.py $1

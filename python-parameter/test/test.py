@@ -1,8 +1,10 @@
+import os
 import subprocess
 
 
 def run_file(parameter):
-    return subprocess.check_output(["bash", "run.sh", parameter]).decode("utf-8").strip()
+    path = os.path.dirname(__file__)
+    return subprocess.check_output(["bash", os.path.join(path, "..", "run.sh"), parameter]).decode("utf-8").strip()
 
 def test_main_with_empty_string():
     assert run_file("") == "Hello, Anonymous!"

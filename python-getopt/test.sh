@@ -1,0 +1,1 @@
+PYTHONDONTWRITEBYTECODE=1 pytest -q -p no:cacheprovider test/test.py
