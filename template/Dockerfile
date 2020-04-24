@@ -1,3 +1,3 @@
-FROM python:3.8.2-alpine
+FROM XXX
 COPY app /app
 WORKDIR /app
