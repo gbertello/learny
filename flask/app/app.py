@@ -9,7 +9,7 @@ CORS(application)
 
 @application.route('/')
 def index():
-  return jsonify({"message": "Hello, World!"})
+  return "Hello World!\n"
   
   
 if __name__ == "__main__":

@@ -2,30 +2,44 @@
 
 CWD=$(cd $(dirname $0) && pwd)
 PARENT=$(dirname $CWD)
-DOCKERFILE=Dockerfile
-ENV=local
-IMAGE=${PARENT##*/}_${CWD##*/}_${ENV}
 
-DOCKERFILE_TEST=${DOCKERFILE}_test
-ENV_TEST=${ENV}_test
-IMAGE_TEST=${IMAGE}_test
+source $CWD/lib/common.sh
 
-docker stop $IMAGE &> /dev/null || true
-docker rm $IMAGE &> /dev/null || true
-docker stop $IMAGE_TEST &> /dev/null || true
-docker rm $IMAGE_TEST &> /dev/null || true
+SYSTEM="test"
 
-docker network create --driver bridge $ENV &> /dev/null || true
-docker build -t $IMAGE -f $DOCKERFILE $CWD > /dev/null
-docker run -dit -e ENV=$ENV --name $IMAGE --network=$ENV $IMAGE > /dev/null
+NETWORK=$SYSTEM
+IMAGE=${PARENT##*/}_${CWD##*/}_${SYSTEM}
 
-docker build -t $IMAGE_TEST -f $DOCKERFILE_TEST $CWD > /dev/null
-docker run -dit -e ENV=$ENV_TEST --name $IMAGE_TEST --network=$ENV $IMAGE_TEST > /dev/null
+if [ ! -z $VOLUME ]
+then
+  DATADIR=$VOLUME/$SYSTEM
+fi
+
+SYSTEM_TEST="pytest"
+
+DOCKERFILE_TEST=$CWD/Dockerfile_test
+IMAGE_TEST=${PARENT##*/}_${CWD##*/}_${SYSTEM_TEST}
+
+stop -i $IMAGE_TEST &> /dev/null || true
+stop -i $IMAGE &> /dev/null || true
+
+OPTIONS=""
+
+if [ ! -z $ENV ]
+then
+  OPTIONS="$OPTIONS -e $ENV"
+fi
+
+if [ ! -z $VOLUME ]
+then
+  mkdir -p $DATADIR
+  OPTIONS="$OPTIONS -v $DATADIR:$TARGET_VOLUME"
+fi
+
+start -i $IMAGE -n $NETWORK -s $SYSTEM $OPTIONS
+start -i $IMAGE_TEST -d $DOCKERFILE_TEST -n $NETWORK -s $SYSTEM_TEST
 
 docker exec $IMAGE_TEST pytest -q --color=yes test.py
 
-docker stop $IMAGE_TEST > /dev/null
-docker rm $IMAGE_TEST > /dev/null
-
-docker stop $IMAGE > /dev/null
-docker rm $IMAGE > /dev/null
+stop -i $IMAGE_TEST &> /dev/null || true
+stop -i $IMAGE &> /dev/null || true

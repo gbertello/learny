@@ -1,41 +1,31 @@
 echo "Testing python-hello-world"
-cd python-hello-world
-./test.sh
-cd ..
+python-hello-world/test.sh
 echo ""
 
 echo "Testing python-parameter"
-cd python-parameter
-./test.sh
-cd ..
+python-parameter/test.sh
 echo ""
 
 echo "Testing python-parameters"
-cd python-parameters
-./test.sh
-cd ..
+python-parameters/test.sh
 echo ""
 
 echo "Testing python-getopt"
-cd python-getopt
-./test.sh
-cd ..
+python-getopt/test.sh
 echo ""
 
 echo "Testing python-disk"
-cd python-disk
-./test.sh
-cd ..
+python-disk/test.sh
 echo ""
 
 echo "Testing mongo"
-cd mongo
-./test.sh
-cd ..
+mongo/test.sh
 echo ""
 
 echo "Testing flask"
-cd flask
-./test.sh
-cd ..
+flask/test.sh
+echo ""
+
+echo "Testing node"
+node/test.sh
 echo ""

@@ -43,11 +43,6 @@ fi
 
 start -i $IMAGE -n $NETWORK -s $SYSTEM $OPTIONS
 
-until docker exec $IMAGE mongo &> /dev/null
-do
-  sleep 5
-done
-
 start -i $IMAGE_TEST -d $DOCKERFILE_TEST -n $NETWORK -s $SYSTEM_TEST
 
 docker exec $IMAGE_TEST pytest -q --color=yes test.py

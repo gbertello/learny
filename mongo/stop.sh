@@ -1,18 +1,24 @@
 #!/bin/bash -e
 
-CWD=$(cd `dirname $0` && pwd)
+CWD=$(cd $(dirname $0) && pwd)
 PARENT=$(dirname $CWD)
-ENV=staging
 
-while getopts ":e:" option; do
+source $CWD/lib/common.sh
+source $CWD/config.sh
+
+if [ -z $SYSTEM ]
+then
+  SYSTEM="dev"
+fi
+
+while getopts ":s:" option; do
   case "${option}" in
-    e)
-      ENV=${OPTARG}
+    s)
+      SYSTEM=${OPTARG}
       ;;
   esac
 done
 
-IMAGE=${PARENT##*/}_${CWD##*/}_$ENV
+IMAGE=${PARENT##*/}_${CWD##*/}_${SYSTEM}
 
-docker stop $IMAGE > /dev/null
-docker rm $IMAGE > /dev/null
+stop -i $IMAGE
