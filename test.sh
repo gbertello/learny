@@ -1,11 +1,17 @@
+CWD=$(cd $(dirname $0) && pwd)
+
 echo "Testing flask"
-flask/test.sh
+$CWD/flask/test.sh
 echo ""
 
 echo "Testing mongo"
-mongo/test.sh
+$CWD/mongo/test.sh
 echo ""
 
 echo "Testing node"
-node/test.sh
+$CWD/node/test.sh
+echo ""
+
+echo "Testing angular"
+$CWD/angular/test.sh
 echo ""

@@ -1,3 +1,3 @@
 FROM XXX
-COPY app /app
 WORKDIR /app
+COPY app/ .
