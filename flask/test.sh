@@ -10,11 +10,6 @@ SYSTEM="test"
 NETWORK=$SYSTEM
 IMAGE=${PARENT##*/}_${CWD##*/}_${SYSTEM}
 
-if [ ! -z $VOLUME ]
-then
-  DATADIR=$VOLUME/$SYSTEM
-fi
-
 SYSTEM_TEST="pytest"
 
 DOCKERFILE_TEST=$CWD/Dockerfile_test
@@ -24,17 +19,6 @@ stop -i $IMAGE_TEST &> /dev/null || true
 stop -i $IMAGE &> /dev/null || true
 
 OPTIONS=""
-
-if [ ! -z $ENV ]
-then
-  OPTIONS="$OPTIONS -e $ENV"
-fi
-
-if [ ! -z $VOLUME ]
-then
-  mkdir -p $DATADIR
-  OPTIONS="$OPTIONS -v $DATADIR:$TARGET_VOLUME"
-fi
 
 start -i $IMAGE -n $NETWORK -s $SYSTEM $OPTIONS
 start -i $IMAGE_TEST -d $DOCKERFILE_TEST -n $NETWORK -s $SYSTEM_TEST

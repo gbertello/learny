@@ -5,11 +5,7 @@ PARENT=$(dirname $CWD)
 
 source $CWD/lib/common.sh
 
-if [ -z $SYSTEM ]
-then
-  SYSTEM="dev"
-fi
-
+SYSTEM=dev
 while getopts ":s:" option; do
   case "${option}" in
     s)

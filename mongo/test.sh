@@ -9,11 +9,9 @@ SYSTEM="test"
 
 NETWORK=$SYSTEM
 IMAGE=${PARENT##*/}_${CWD##*/}_${SYSTEM}
-
-if [ ! -z $VOLUME ]
-then
-  DATADIR=$VOLUME/$SYSTEM
-fi
+VOLUME=$CWD/disk
+TARGET_VOLUME="/data/db"
+DATADIR=$VOLUME/$SYSTEM
 
 SYSTEM_TEST="pytest"
 
@@ -23,23 +21,12 @@ IMAGE_TEST=${PARENT##*/}_${CWD##*/}_${SYSTEM_TEST}
 stop -i $IMAGE_TEST &> /dev/null || true
 stop -i $IMAGE &> /dev/null || true
 
-if [ ! -z $VOLUME ]
-then
-  rm -rf $DATADIR
-fi
+rm -rf $DATADIR
 
 OPTIONS=""
 
-if [ ! -z $ENV ]
-then
-  OPTIONS="$OPTIONS -e $ENV"
-fi
-
-if [ ! -z $VOLUME ]
-then
-  mkdir -p $DATADIR
-  OPTIONS="$OPTIONS -v $DATADIR:$TARGET_VOLUME"
-fi
+mkdir -p $DATADIR
+OPTIONS="$OPTIONS -v $DATADIR:$TARGET_VOLUME"
 
 start -i $IMAGE -n $NETWORK -s $SYSTEM $OPTIONS
 
@@ -55,7 +42,4 @@ docker exec $IMAGE_TEST pytest -q --color=yes test.py
 stop -i $IMAGE_TEST &> /dev/null || true
 stop -i $IMAGE &> /dev/null || true
 
-if [ ! -z $VOLUME ]
-then
-  rm -rf $DATADIR
-fi
+rm -rf $DATADIR

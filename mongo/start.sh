@@ -5,20 +5,12 @@ PARENT=$(dirname $CWD)
 
 source $CWD/lib/common.sh
 
-TARGET_PORT=80
-TARGET_VOLUME="/data/db"
+SYSTEM=dev
 VOLUME=$CWD/disk
+TARGET_VOLUME="/data/db"
 
-if [ -z $SYSTEM ]
-then
-  SYSTEM="dev"
-fi
-
-while getopts ":p:s:" option; do
+while getopts ":s:" option; do
   case "${option}" in
-    p)
-      PORT=${OPTARG}
-      ;;
     s)
       SYSTEM=${OPTARG}
       ;;
@@ -32,16 +24,6 @@ DATADIR=$VOLUME/$SYSTEM
 stop -i $IMAGE &> /dev/null || true
 
 OPTIONS=""
-
-if [ ! -z $ENV ]
-then
-  OPTIONS="$OPTIONS -e $ENV"
-fi
-
-if [ ! -z $PORT ]
-then
-  OPTIONS="$OPTIONS -p $PORT:$TARGET_PORT"
-fi
 
 if [[ $ENV -eq "prod" ]]
 then

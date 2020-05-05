@@ -5,6 +5,4 @@ app.get('/', function (req, res) {
   res.send('Hello World!\n')
 })
 
-app.listen(80, function () {
-  console.log('Example app listening on port 80!')
-})
+app.listen(80)

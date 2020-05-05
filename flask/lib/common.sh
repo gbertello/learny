@@ -59,6 +59,8 @@ start () {
   do
     OPTIONS="$OPTIONS -e $i"
   done
+  OPTIONS="$OPTIONS -e IMAGE=$IMAGE"
+  OPTIONS="$OPTIONS -e SYSTEM=$SYSTEM"
 
   if [ ! -z $IMAGE ]
   then
