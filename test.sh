@@ -15,3 +15,7 @@ echo ""
 echo "Testing angular"
 $CWD/angular/test.sh
 echo ""
+
+echo "Testing nginx"
+$CWD/nginx/test.sh
+echo ""

@@ -55,7 +55,7 @@ start () {
 
   OPTIONS=""
 
-  for i in $(echo $ENV | tr ":" "\n")
+  for i in $(echo $ENV | tr "|" "\n")
   do
     OPTIONS="$OPTIONS -e $i"
   done
@@ -72,10 +72,10 @@ start () {
     OPTIONS="$OPTIONS --network=$NETWORK"
   fi
 
-  if [ ! -z $PORT ]
-  then
-    OPTIONS="$OPTIONS -p $PORT"
-  fi
+  for i in $(echo $PORT | tr "|" "\n")
+  do
+    OPTIONS="$OPTIONS -p $i"
+  done
 
   if [ ! -z $RESTART ]
   then
