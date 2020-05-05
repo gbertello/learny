@@ -1,4 +1,4 @@
-start () {  
+start () {
   local OPTIND # Needed for local getopts
 
   local DOCKERFILE=""
@@ -8,8 +8,9 @@ start () {
   local PORT=""
   local SYSTEM=""
   local VOLUME=""
-  
-  while getopts ":d:e:i:n:p:s:v:" option; do
+  local RESTART=""
+
+  while getopts ":d:e:i:n:p:r:s:v:" option; do
     case "${option}" in
       d)
         DOCKERFILE=${OPTARG}
@@ -25,6 +26,9 @@ start () {
         ;;
       p)
         PORT=${OPTARG}
+        ;;
+      r)
+        RESTART=${OPTARG}
         ;;
       s)
         SYSTEM=${OPTARG}
@@ -46,44 +50,49 @@ start () {
   then
     OPTIONS="$OPTIONS -f $DOCKERFILE"
   fi
-  
+
   docker build -t $IMAGE $OPTIONS $CWD > /dev/null
 
   OPTIONS=""
-  
+
   for i in $(echo $ENV | tr ":" "\n")
   do
     OPTIONS="$OPTIONS -e $i"
   done
-  
+
   if [ ! -z $IMAGE ]
   then
     OPTIONS="$OPTIONS --name $IMAGE"
   fi
-  
+
   if [ ! -z $NETWORK ]
   then
     OPTIONS="$OPTIONS --network=$NETWORK"
   fi
-  
+
   if [ ! -z $PORT ]
   then
     OPTIONS="$OPTIONS -p $PORT"
   fi
-  
+
+  if [ ! -z $RESTART ]
+  then
+    OPTIONS="$OPTIONS --restart $RESTART"
+  fi
+
   if [ ! -z $VOLUME ]
   then
     OPTIONS="$OPTIONS -v $VOLUME"
   fi
-  
+
   docker run -dit $OPTIONS $IMAGE > /dev/null
 }
 
-stop () {  
+stop () {
   local OPTIND # Needed for local getopts
-  
+
   local IMAGE=""
-  
+
   while getopts ":i:" option; do
     case "${option}" in
       i)
@@ -91,7 +100,7 @@ stop () {
         ;;
     esac
   done
- 
+
   docker stop $IMAGE > /dev/null
   docker rm $IMAGE > /dev/null
 }

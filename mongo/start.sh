@@ -4,21 +4,14 @@ CWD=$(cd $(dirname $0) && pwd)
 PARENT=$(dirname $CWD)
 
 source $CWD/lib/common.sh
-source $CWD/config.sh
+
+TARGET_PORT=80
+TARGET_VOLUME="/data/db"
+VOLUME=$CWD/disk
 
 if [ -z $SYSTEM ]
 then
   SYSTEM="dev"
-fi
-
-if [ -z $TARGET_PORT ]
-then
-  TARGET_PORT=80
-fi
-
-if [ -z $TARGET_VOLUME ]
-then
-  TARGET_VOLUME="/mnt/disk"
 fi
 
 while getopts ":p:s:" option; do
@@ -34,11 +27,7 @@ done
 
 NETWORK=$SYSTEM
 IMAGE=${PARENT##*/}_${CWD##*/}_${SYSTEM}
-
-if [ ! -z $VOLUME ]
-then
-  DATADIR=$VOLUME/$SYSTEM
-fi
+DATADIR=$VOLUME/$SYSTEM
 
 stop -i $IMAGE &> /dev/null || true
 
@@ -54,11 +43,13 @@ then
   OPTIONS="$OPTIONS -p $PORT:$TARGET_PORT"
 fi
 
-if [ ! -z $VOLUME ]
+if [[ $ENV -eq "prod" ]]
 then
-  mkdir -p $DATADIR
-  OPTIONS="$OPTIONS -v $DATADIR:$TARGET_VOLUME"
+  OPTIONS="$OPTIONS -r always"
 fi
+
+mkdir -p $DATADIR
+OPTIONS="$OPTIONS -v $DATADIR:$TARGET_VOLUME"
 
 start -i $IMAGE -s $SYSTEM -n $NETWORK $OPTIONS
 

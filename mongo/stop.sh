@@ -4,7 +4,6 @@ CWD=$(cd $(dirname $0) && pwd)
 PARENT=$(dirname $CWD)
 
 source $CWD/lib/common.sh
-source $CWD/config.sh
 
 if [ -z $SYSTEM ]
 then

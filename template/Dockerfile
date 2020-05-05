@@ -1,3 +1,0 @@
-FROM XXX
-WORKDIR /app
-COPY app/ .
