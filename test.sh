@@ -1,21 +1,7 @@
 CWD=$(cd $(dirname $0) && pwd)
 
-echo "Testing flask"
-$CWD/flask/test.sh
-echo ""
-
-echo "Testing mongo"
-$CWD/mongo/test.sh
-echo ""
-
-echo "Testing node"
-$CWD/node/test.sh
-echo ""
-
-echo "Testing angular"
-$CWD/angular/test.sh
-echo ""
-
-echo "Testing nginx"
-$CWD/nginx/test.sh
-echo ""
+for dir in */ ; do
+  echo "Testing ${dir%/}..."
+  $CWD/$dir/test.sh -s $SYSTEM
+  echo ""
+done

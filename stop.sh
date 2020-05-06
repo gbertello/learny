@@ -9,22 +9,7 @@ while getopts ":s:" option; do
   esac
 done
 
-echo "Stopping flask"
-$CWD/flask/stop.sh -s $SYSTEM
-echo ""
-
-echo "Stopping mongo"
-$CWD/mongo/stop.sh -s $SYSTEM
-echo ""
-
-echo "Stopping node"
-$CWD/node/stop.sh -s $SYSTEM
-echo ""
-
-echo "Stopping angular"
-$CWD/angular/stop.sh -s $SYSTEM
-echo ""
-
-echo "Stopping nginx"
-$CWD/nginx/stop.sh -s $SYSTEM
-echo ""
+for dir in */ ; do
+  echo "Stopping ${dir%/}..."
+  $CWD/$dir/stop.sh -s $SYSTEM
+done

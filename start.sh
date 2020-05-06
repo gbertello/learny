@@ -9,22 +9,7 @@ while getopts ":s:" option; do
   esac
 done
 
-echo "Starting flask"
-$CWD/flask/start.sh -s $SYSTEM
-echo ""
-
-echo "Starting mongo"
-$CWD/mongo/start.sh -s $SYSTEM
-echo ""
-
-echo "Starting node"
-$CWD/node/start.sh -s $SYSTEM
-echo ""
-
-echo "Starting angular"
-$CWD/angular/start.sh -s $SYSTEM
-echo ""
-
-echo "Starting nginx"
-$CWD/nginx/start.sh -s $SYSTEM
-echo ""
+for dir in */ ; do
+  echo "Starting ${dir%/}"
+  $CWD/$dir/start.sh -s $SYSTEM
+done
