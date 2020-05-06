@@ -10,6 +10,6 @@ while getopts ":s:" option; do
 done
 
 for dir in */ ; do
-  echo "Starting ${dir%/}"
+  echo "Starting ${dir%/}..."
   $CWD/$dir/start.sh -s $SYSTEM
 done
