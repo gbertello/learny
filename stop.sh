@@ -9,7 +9,7 @@ while getopts ":s:" option; do
   esac
 done
 
-for dir in */ ; do
-  echo "Stopping ${dir%/}..."
-  $CWD/$dir/stop.sh -s $SYSTEM
+for dir in $(find $CWD -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*') ; do
+  echo "Stopping ${dir#./}..."
+  $dir/stop.sh -s $SYSTEM
 done

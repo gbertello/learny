@@ -9,7 +9,7 @@ while getopts ":s:" option; do
   esac
 done
 
-for dir in */ ; do
-  echo "Starting ${dir%/}..."
-  $CWD/$dir/start.sh -s $SYSTEM
+for dir in $(find $CWD -mindepth 1 -maxdepth 1 -type d -not -path '*/\.*') ; do
+  echo "Starting ${dir#./}..."
+  $dir/start.sh -s $SYSTEM
 done
