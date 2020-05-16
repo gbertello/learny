@@ -9,7 +9,7 @@ SYSTEM="test"
 
 NETWORK=$SYSTEM
 IMAGE=${PARENT##*/}_${CWD##*/}_${SYSTEM}
-VOLUME="$CWD/test/disk"
+VOLUME="$CWD/app"
 TARGET_VOLUME="/usr/share/nginx/html"
 
 SYSTEM_TEST="pytest"
@@ -20,7 +20,7 @@ IMAGE_TEST=${PARENT##*/}_${CWD##*/}_${SYSTEM_TEST}
 stop -i $IMAGE_TEST &> /dev/null || true
 stop -i $IMAGE &> /dev/null || true
 
-OPTIONS="-v $VOLUME:$TARGET_VOLUME"
+OPTIONS="-v $VOLUME:$TARGET_VOLUME:ro"
 
 start -i $IMAGE -n $NETWORK -s $SYSTEM $OPTIONS
 start -i $IMAGE_TEST -d $DOCKERFILE_TEST -n $NETWORK -s $SYSTEM_TEST

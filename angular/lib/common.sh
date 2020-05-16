@@ -82,10 +82,10 @@ start () {
     OPTIONS="$OPTIONS --restart $RESTART"
   fi
 
-  if [ ! -z $VOLUME ]
-  then
-    OPTIONS="$OPTIONS -v $VOLUME"
-  fi
+  for i in $(echo $VOLUME | tr "|" "\n")
+  do
+    OPTIONS="$OPTIONS -v $i"
+  done
 
   docker run -dit $OPTIONS $IMAGE > /dev/null
 }
