@@ -22,7 +22,7 @@ stop -i $IMAGE &> /dev/null || true
 OPTIONS=""
 OPTIONS="$OPTIONS -e $ENV"
 
-if [[ $SYSTEM -eq "prod" ]]
+if [[ $SYSTEM == "prod" ]]
 then
   OPTIONS="$OPTIONS -r always"
 fi
