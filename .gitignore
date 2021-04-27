@@ -1,9 +1,3 @@
-disk
-
-# python cache
-__pycache__
-.pytest_cache
-
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json
