@@ -13,5 +13,8 @@ NETWORK = SYSTEM
 IMAGE = os.path.basename(os.path.dirname(CWD)) + "_" + os.path.basename(CWD) + "_" + SYSTEM
 VOLUMES = {os.path.join(CWD, "disk", SYSTEM): "/data/db"}
 VARIABLES = {}
-PORTS = {"3000": "27017"}
+if SYSTEM == "dev":
+  PORTS = {"3001": "27017"}
+else:
+  PORTS = {}
 RESTART = True if SYSTEM == "prod" else False

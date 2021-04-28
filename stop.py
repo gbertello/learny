@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-from config import COMPONENTS
 import os
 import subprocess as sp
 
-for component in COMPONENTS:
-  sp.run([os.path.join(component, "stop.py")])
+CWD = os.path.dirname(os.path.abspath(__file__))
+for dirname in os.listdir(CWD):
+  script_name = os.path.join(dirname, "stop.py")
+  if os.path.exists(script_name):
+    sp.run([script_name])

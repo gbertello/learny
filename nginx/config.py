@@ -13,5 +13,8 @@ NETWORK = SYSTEM
 IMAGE = os.path.basename(os.path.dirname(CWD)) + "_" + os.path.basename(CWD) + "_" + SYSTEM
 VOLUMES = {os.path.join(CWD, "app"): "/usr/share/nginx/html"}
 VARIABLES = {}
-PORTS = {"3000": "80"}
+if SYSTEM == "dev":
+  PORTS = {"5501": "80"}
+else:
+  PORTS = {}
 RESTART = True if SYSTEM == "prod" else False
