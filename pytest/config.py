@@ -12,6 +12,6 @@ SYSTEM = args.system
 NETWORK = SYSTEM
 IMAGE = os.path.basename(os.path.dirname(CWD)) + "_" + os.path.basename(CWD) + "_" + SYSTEM
 VOLUMES = {}
-VARIABLES = {"URL": "mongodb://%s_mongo_%s:27017" % (os.path.basename(os.path.dirname(CWD)), SYSTEM)}
+VARIABLES = {}
 PORTS = {}
 RESTART = True if SYSTEM == "prod" else False
