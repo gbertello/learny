@@ -4,8 +4,8 @@ import subprocess as sp
 from config import CWD, IMAGE
 
 db = "test_db"
-collection = "data"
-filename = os.path.join(CWD, f"{collection}_import")
+collection = "collection"
+filename = os.path.join(CWD, "data", f"{collection}_import")
 target_filename = f"/tmp/{collection}_import"
 
 sp.run(["docker", "exec", IMAGE, "mongo", db, "--eval", "db.dropDatabase()"], stdout=open(os.devnull, 'w'))
