@@ -34,3 +34,5 @@ while True:
   if child.returncode == 0:
     break
   time.sleep(5)
+
+sp.run(["docker", "ps"])
