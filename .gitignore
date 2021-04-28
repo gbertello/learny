@@ -8,3 +8,7 @@
 # System Files
 .DS_Store
 Thumbs.db
+
+# Python and pytest files
+__pycache__
+.pytest_cache
