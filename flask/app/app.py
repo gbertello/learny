@@ -10,7 +10,7 @@ CORS(application)
 @application.route('/')
 def index():
   return "Hello World!\n"
-  
-  
+
+
 if __name__ == "__main__":
   application.run()
