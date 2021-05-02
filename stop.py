@@ -4,6 +4,6 @@ import subprocess as sp
 
 CWD = os.path.dirname(os.path.abspath(__file__))
 for dirname in os.listdir(CWD):
-  script_name = os.path.join(dirname, "stop.py")
+  script_name = os.path.join(os.path.join(CWD, dirname), "stop.py")
   if os.path.exists(script_name):
     sp.run([script_name])
