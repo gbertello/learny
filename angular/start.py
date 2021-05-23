@@ -23,14 +23,11 @@ RESTART = True if SYSTEM == "prod" else False
 sp.run(["docker", "stop", IMAGE], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 sp.run(["docker", "rm", IMAGE], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 
-sp.run(["npm", "install"], cwd=os.path.join(CWD, "app"))
-
 if SYSTEM == "prod":
-  sp.run(["ng", "build", "--configuration", "production"], cwd=os.path.join(CWD, "app"))
+  sp.run(["docker", "build", "-t", IMAGE, "--build-arg", "ENV=production", CWD], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 else:
-  sp.run(["ng", "build", "--configuration", SYSTEM], cwd=os.path.join(CWD, "app"))
+  sp.run(["docker", "build", "-t", IMAGE, "--build-arg", "ENV=" + SYSTEM, CWD], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 
-sp.run(["docker", "build", "-t", IMAGE, CWD], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 sp.run(["docker", "network", "create", "--driver", "bridge", NETWORK], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 
 OPTIONS = []
