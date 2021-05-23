@@ -24,9 +24,9 @@ sp.run(["docker", "stop", IMAGE], stdout=open(os.devnull, 'w'), stderr=open(os.d
 sp.run(["docker", "rm", IMAGE], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 
 if SYSTEM == "prod":
-  sp.run(["docker", "build", "-t", IMAGE, "--build-arg", "ENV=production", CWD])
+  sp.run(["docker", "build", "-t", IMAGE, "--build-arg", "ANGULAR_ENV=production", CWD])
 else:
-  sp.run(["docker", "build", "-t", IMAGE, "--build-arg", "ENV=" + SYSTEM, CWD])
+  sp.run(["docker", "build", "-t", IMAGE, "--build-arg", "ANGULAR_ENV=" + SYSTEM, CWD])
 
 sp.run(["docker", "network", "create", "--driver", "bridge", NETWORK], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 
