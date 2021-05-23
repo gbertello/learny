@@ -1,11 +1,12 @@
 ### STAGE 1: Build ###
-FROM node:14.15-alpine AS build
-RUN npm install -g @angular/cli@12.0.1
+FROM node:12.7-alpine AS build
+RUN npm install -g @angular/cli@9.1.8
 WORKDIR /app
 COPY app/package.json ./
 RUN npm install
 COPY app/ .
-RUN ng build --configuration $ANGULAR_ENV
+ARG ANGULAR_ENV
+RUN ng build --configuration=$ANGULAR_ENV
 
 ### STAGE 2: Run ###
 FROM nginx:1.17.1-alpine
