@@ -1,9 +1,24 @@
 #!/usr/bin/env python3
-from config import CWD, SYSTEM, NETWORK, IMAGE, VOLUMES, VARIABLES, PORTS, RESTART
+import argparse
 import os
 import subprocess as sp
 import time
 
+parser = argparse.ArgumentParser()
+parser.add_argument("-s", "--system", default="dev", help="Specify system")
+args = parser.parse_args()
+
+CWD = os.path.dirname(os.path.abspath(__file__))
+SYSTEM = args.system
+NETWORK = SYSTEM
+IMAGE = os.path.basename(os.path.dirname(CWD)) + "_" + os.path.basename(CWD) + "_" + SYSTEM
+VOLUMES = {os.path.join(CWD, "app"): "/usr/share/nginx/html"}
+VARIABLES = {}
+if SYSTEM == "dev":
+  PORTS = {"5501": "80"}
+else:
+  PORTS = {}
+RESTART = True if SYSTEM == "prod" else False
 
 sp.run(["docker", "stop", IMAGE], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))
 sp.run(["docker", "rm", IMAGE], stdout=open(os.devnull, 'w'), stderr=open(os.devnull, 'w'))

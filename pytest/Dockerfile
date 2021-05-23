@@ -1,5 +1,0 @@
-FROM python:3.8.2-alpine
-RUN pip install pytest pymongo
-COPY test /test
-WORKDIR /test
-CMD /bin/sh
